@@ -198,9 +198,9 @@ psiteMapping <- function(bam_file_list, gtf_file, psite.mapping="auto",
 .pMappingAll <- function(bam_file_list, psite.mapping, txdb, all_genes, cores){
     chrom <- seqnames(seqinfo(all_genes))  # extract all chromosome names
     for (k in seq_along(bam_file_list)) {
-        if (!file.exists(gsub(".bam", ".bai", bam_file_list[k]))) {
-            message("Indexing", bam_file_list[k], "\n")
-            Rsamtools::indexBam(bam_file_list[k])
+            if (!file.exists(gsub(".bam", ".csi", bam_file_list[k]))) {
+            message("ing", bam_file_list[k], "\n")
+            system2("samtools", args = c("index", "-c", bam_file_list[k])) #RSAmtools fails for large size BAM files
         }
     }
     if (psite.mapping[1] == "auto") {
