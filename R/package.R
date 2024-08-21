@@ -378,6 +378,7 @@ dataBinning <- function(data, bin.width=0, zero.omit=FALSE, bin.from.5UTR=TRUE,
         unname(tapply(x, bin.codon, sum))))
     names.codon <- unname(tapply(colnames(data1), bin.codon, function(x)
         paste(x[1],tail(x,n=1), sep="-")))
+    if (length(bin.codon) < 4) {next}
     colnames(data.codon) <- names.codon
     if (bin.width == 1) return(data.codon) # return codon level
     if (sum(data1)) {
